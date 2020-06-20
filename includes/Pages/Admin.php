@@ -2,30 +2,37 @@
 
 namespace XVR\Firestarter\Pages;
 
+use XVR\Firestarter\Api\Settings_Api;
 use \XVR\Firestarter\Base\Base_Controller;
 
 /**
 * Admin Page handler class
 */
 class Admin extends Base_Controller {
+
+    public $settings;
+    private $pages = [];
+
+    public function __construct() {
+        $this->settings = new Settings_Api();
+
+        $this->pages = [
+            [
+                'title' => 'Firestarter Plugin',
+                'menu_title' => 'Firestarter',
+                'capability' => 'manage_options',
+                'menu_slug' => 'firestarter_plugin',
+                'callback' => function () { echo '<h1>Hello World</h1>'; },
+                'icon_url' => 'dashicons-store',
+                'position' => 110,
+            ]
+        ];
+    }
+
     /**
      * Registers
      */
     public function register() {
-		add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
-	}
-
-    /**
-     * Adds admin page
-     */
-    public function add_admin_pages() {
-		add_menu_page( 'Firestarter Plugin', 'Firestarter', 'manage_options', 'firestarter_plugin', array( $this, 'admin_index' ), 'dashicons-store', 110 );
-	}
-
-    /**
-     * Admin page template
-     */
-    public function admin_index() {
-		require_once $this->plugin_path . 'templates/settings.php';
+		$this->settings->add_pages( $this->pages )->register();
 	}
 }

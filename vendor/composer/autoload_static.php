@@ -21,13 +21,13 @@ class ComposerStaticInit03d918d9dd46c64860cf02d855b28b1e
     );
 
     public static $classMap = array (
-        'XVR\\Firestarter\\Admin' => __DIR__ . '/../..' . '/includes/Pages/Admin.php',
         'XVR\\Firestarter\\Base\\Activate' => __DIR__ . '/../..' . '/includes/Base/Activate.php',
-        'XVR\\Firestarter\\Base\\Base_Controller' => __DIR__ . '/../..',
+        'XVR\\Firestarter\\Base\\Base_Controller' => __DIR__ . '/../..' . '/includes/Base/Base_Controller.php',
         'XVR\\Firestarter\\Base\\Deactivate' => __DIR__ . '/../..' . '/includes/Base/Deactivate.php',
         'XVR\\Firestarter\\Base\\Enqueue' => __DIR__ . '/../..' . '/includes/Base/Enqueue.php',
-        'XVR\\Firestarter\\Base\\Settings_Links' => __DIR__ . '/../..',
+        'XVR\\Firestarter\\Base\\Settings_Links' => __DIR__ . '/../..' . '/includes/Base/Settings_Links.php',
         'XVR\\Firestarter\\Init' => __DIR__ . '/../..' . '/includes/Init.php',
+        'XVR\\Firestarter\\Pages\\Admin' => __DIR__ . '/../..' . '/includes/Pages/Admin.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
