@@ -2,9 +2,15 @@
 
 namespace XVR\Firestarter\Base;
 
-class Activate
-{
-	public static function activate() {
+/**
+ * Class Activate
+ * @package XVR\Firestarter\Base
+ */
+class Activate {
+    /**
+     * Activates the plugin
+     */
+    public static function activate() {
 		flush_rewrite_rules();
 	}
 }

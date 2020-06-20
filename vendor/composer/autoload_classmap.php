@@ -8,9 +8,9 @@ $baseDir = dirname($vendorDir);
 return array(
     'XVR\\Firestarter\\Admin' => $baseDir . '/includes/Pages/Admin.php',
     'XVR\\Firestarter\\Base\\Activate' => $baseDir . '/includes/Base/Activate.php',
-    'XVR\\Firestarter\\Base\\BaseController' => $baseDir . '/includes/Base/BaseController.php',
+    'XVR\\Firestarter\\Base\\Base_Controller' => $baseDir . '/includes/Base/BaseController.php',
     'XVR\\Firestarter\\Base\\Deactivate' => $baseDir . '/includes/Base/Deactivate.php',
     'XVR\\Firestarter\\Base\\Enqueue' => $baseDir . '/includes/Base/Enqueue.php',
-    'XVR\\Firestarter\\Base\\SettingsLinks' => $baseDir . '/includes/Base/SettingsLinks.php',
+    'XVR\\Firestarter\\Base\\Settings_Links' => $baseDir . '/includes/Base/SettingsLinks.php',
     'XVR\\Firestarter\\Init' => $baseDir . '/includes/Init.php',
 );

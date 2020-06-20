@@ -2,9 +2,15 @@
 
 namespace XVR\Firestarter\Base;
 
-class Deactivate
-{
-	public static function deactivate() {
+/**
+ * Class Deactivate
+ * @package XVR\Firestarter\Base
+ */
+class Deactivate {
+    /**
+     * Deactivates the plugin
+     */
+    public static function deactivate() {
 		flush_rewrite_rules();
 	}
 }
