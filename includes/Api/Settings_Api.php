@@ -19,7 +19,22 @@ class Settings_Api {
      */
     private $admin_sub_pages = [];
 
-    /**
+	/**
+	 * @var array
+	 */
+	private $settings = [];
+
+	/**
+	 * @var array
+	 */
+	private $sections = [];
+
+	/**
+	 * @var array
+	 */
+	private $fields = [];
+
+	/**
      *  Registers
      */
     public function register() {
@@ -83,4 +98,55 @@ class Settings_Api {
 
         return $this;
     }
+
+	/**
+	 * Registers custom fields
+	 * @return void
+	 */
+    public function register_custom_fields() {
+    	// Register setting
+	    foreach ( $this->settings as $setting ) {
+		    register_setting( $setting['option_group'], $setting['option_name'], isset( $setting['callback'] ) ? $setting['callback'] : '' );
+	    }
+
+	    // Add settings section
+	    foreach ( $this->sections as $section ) {
+		    add_settings_section( $section['id'], $section['title'], isset( $section['callback'] ) ? $section['callback'] : '', $section['page'] );
+	    }
+
+	    // Add settings field
+	    foreach ( $this->fields as $field ) {
+		    add_settings_field( $field['id'], $field['title'], isset( $field['callback'] ) ? $field['callback'] : '', $field['page'], $field['section'], isset( $field['args'] ) ? $field['args'] : '' );
+	    }
+    }
+
+	/**
+	 * @param array $settings
+	 *
+	 * @return $this
+	 */
+    public function set_settings( array $settings ) {
+    	$this->settings = $settings;
+    	return $this;
+    }
+
+	/**
+	 * @param array $sections
+	 *
+	 * @return $this
+	 */
+	public function set_sections( array $sections ) {
+		$this->sections = $sections;
+		return $this;
+	}
+
+	/**
+	 * @param array $fields
+	 *
+	 * @return $this
+	 */
+	public function set_fields( array $fields ) {
+		$this->fields = $fields;
+		return $this;
+	}
 }

@@ -66,7 +66,7 @@ class Admin extends Base_Controller {
     }
 
     /**
-     * Sets subpages
+     * Sets sub pages
      */
     public function set_sub_pages() {
         $this->sub_pages = array(
