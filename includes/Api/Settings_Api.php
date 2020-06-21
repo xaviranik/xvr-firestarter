@@ -41,6 +41,10 @@ class Settings_Api {
         if ( ! empty( $this->admin_pages ) ) {
             add_action( 'admin_menu', [ $this, 'add_admin_menu' ] );
         }
+
+        if ( ! empty( $this->settings ) ) {
+            add_action( 'admin_init', [ $this, 'register_custom_fields' ] );
+        }
     }
 
     /**

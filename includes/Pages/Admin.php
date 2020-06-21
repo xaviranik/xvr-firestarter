@@ -29,12 +29,6 @@ class Admin extends Base_Controller {
     private $callbacks;
 
     /**
-     * Admin constructor.
-     */
-    public function __construct() {
-    }
-
-    /**
      * Registers
      */
     public function register() {
@@ -44,6 +38,10 @@ class Admin extends Base_Controller {
 
         $this->set_pages();
         $this->set_sub_pages();
+
+        $this->set_settings();
+        $this->set_sections();
+        $this->set_fields();
 
         $this->settings->add_pages( $this->pages )->with_sub_page( 'Dashboard' )->add_sub_pages( $this->sub_pages )->register();
 	}
@@ -76,7 +74,7 @@ class Admin extends Base_Controller {
                 'menu_title' => 'CPT',
                 'capability' => 'manage_options',
                 'menu_slug' => 'firestarter_cpt',
-                'callback' => function() { echo '<h1>CPT Manager</h1>'; }
+                'callback' => [ $this->callbacks, 'admin_cpt_manager' ]
             ],
             [
                 'parent_slug' => 'firestarter_plugin',
@@ -84,7 +82,7 @@ class Admin extends Base_Controller {
                 'menu_title' => 'Taxonomies',
                 'capability' => 'manage_options',
                 'menu_slug' => 'firestarter_taxonomies',
-                'callback' => function() { echo '<h1>Taxonomies Manager</h1>'; }
+                'callback' => [ $this->callbacks, 'admin_taxonomy_manager' ]
             ],
             [
                 'parent_slug' => 'firestarter_plugin',
@@ -92,8 +90,51 @@ class Admin extends Base_Controller {
                 'menu_title' => 'Widgets',
                 'capability' => 'manage_options',
                 'menu_slug' => 'firestarter_widgets',
-                'callback' => function() { echo '<h1>Widgets Manager</h1>'; }
+                'callback' => [ $this->callbacks, 'admin_widget_manager' ]
             ],
         );
+    }
+
+    public function set_settings() {
+        $args = [
+            [
+                'option_group' => 'xvr_firestarter_option_group',
+                'option_name' => 'text_example',
+                'callback' => [ $this->callbacks,  'xvr_firestarter_option_group'],
+            ]
+        ];
+
+        $this->settings->set_settings( $args );
+    }
+
+    public function set_sections() {
+        $args = [
+            [
+                'id' => 'xvr_firestarter_admin_index',
+                'title' => 'Settings',
+                'callback' => [ $this->callbacks,  'xvr_firestarter_admin_section'],
+                'page' => 'firestarter_plugin',
+            ]
+        ];
+
+        $this->settings->set_sections( $args );
+    }
+
+    public function set_fields() {
+        $args = [
+            [
+                'id' => 'text_example',
+                'title' => 'Text Example',
+                'callback' => [ $this->callbacks,  'xvr_firestarter_text_example'],
+                'page' => 'firestarter_plugin',
+                'section' => 'xvr_firestarter_admin_index',
+                'args' => [
+                    'label_for' => 'text_example',
+                    'class' => 'example-class'
+                ],
+            ]
+        ];
+
+        $this->settings->set_fields( $args );
     }
 }
