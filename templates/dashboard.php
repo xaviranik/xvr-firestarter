@@ -14,7 +14,7 @@
 
             <form method="post" action="options.php">
                 <?php
-                settings_fields( 'xvr_firestarter_option_group' );
+                settings_fields( 'xvr_firestarter_settings_group' );
                 do_settings_sections( 'firestarter_plugin' );
                 submit_button();
                 ?>

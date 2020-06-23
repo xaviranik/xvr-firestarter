@@ -3,6 +3,7 @@
 namespace XVR\Firestarter\Pages;
 
 use XVR\Firestarter\Api\Callbacks\Admin_Callbacks;
+use XVR\Firestarter\Api\Callbacks\Input_Callbacks;
 use XVR\Firestarter\Api\Settings_Api;
 use \XVR\Firestarter\Base\Base_Controller;
 
@@ -27,14 +28,19 @@ class Admin extends Base_Controller {
      * @var Admin_Callbacks
      */
     private $callbacks;
+	/**
+	 * @var Input_Callbacks
+	 */
+	private $input_callbacks;
 
-    /**
+	/**
      * Registers
      */
     public function register() {
         $this->settings = new Settings_Api();
 
         $this->callbacks = new Admin_Callbacks();
+        $this->input_callbacks = new Input_Callbacks();
 
         $this->set_pages();
         $this->set_sub_pages();
@@ -98,10 +104,20 @@ class Admin extends Base_Controller {
     public function set_settings() {
         $args = [
             [
-                'option_group' => 'xvr_firestarter_option_group',
-                'option_name' => 'text_example',
-                'callback' => [ $this->callbacks,  'xvr_firestarter_option_group'],
-            ]
+                'option_group' => 'xvr_firestarter_settings_group',
+                'option_name' => 'cpt_manager',
+                'callback' => [ $this->input_callbacks,  'checkbox_sanitize'],
+            ],
+	        [
+		        'option_group' => 'xvr_firestarter_settings_group',
+		        'option_name' => 'taxonomy_manager',
+		        'callback' => [ $this->input_callbacks,  'checkbox_sanitize'],
+	        ],
+	        [
+		        'option_group' => 'xvr_firestarter_settings_group',
+		        'option_name' => 'widget_manager',
+		        'callback' => [ $this->input_callbacks,  'checkbox_sanitize'],
+	        ],
         ];
 
         $this->settings->set_settings( $args );
@@ -111,7 +127,7 @@ class Admin extends Base_Controller {
         $args = [
             [
                 'id' => 'xvr_firestarter_admin_index',
-                'title' => 'Settings',
+                'title' => 'Settings Manager',
                 'callback' => [ $this->callbacks,  'xvr_firestarter_admin_section'],
                 'page' => 'firestarter_plugin',
             ]
@@ -123,16 +139,35 @@ class Admin extends Base_Controller {
     public function set_fields() {
         $args = [
             [
-                'id' => 'text_example',
-                'title' => 'Text Example',
-                'callback' => [ $this->callbacks,  'xvr_firestarter_text_example'],
+                'id' => 'cpt_manager',
+                'title' => 'Activate CPT Manager',
+                'callback' => [ $this->input_callbacks,  'checkbox_field'],
                 'page' => 'firestarter_plugin',
                 'section' => 'xvr_firestarter_admin_index',
                 'args' => [
-                    'label_for' => 'text_example',
-                    'class' => 'example-class'
+                    'label_for' => 'cpt_manager',
                 ],
-            ]
+            ],
+	        [
+		        'id' => 'taxonomy_manager',
+		        'title' => 'Activate Taxonomy Manager',
+		        'callback' => [ $this->input_callbacks,  'checkbox_field'],
+		        'page' => 'firestarter_plugin',
+		        'section' => 'xvr_firestarter_admin_index',
+		        'args' => [
+			        'label_for' => 'taxonomy_manager',
+		        ],
+	        ],
+	        [
+		        'id' => 'widget_manager',
+		        'title' => 'Activate Widget Manager',
+		        'callback' => [ $this->input_callbacks,  'checkbox_field'],
+		        'page' => 'firestarter_plugin',
+		        'section' => 'xvr_firestarter_admin_index',
+		        'args' => [
+			        'label_for' => 'widget_manager',
+		        ],
+	        ],
         ];
 
         $this->settings->set_fields( $args );
