@@ -102,23 +102,16 @@ class Admin extends Base_Controller {
     }
 
     public function set_settings() {
-        $args = [
-            [
+
+    	$args = [];
+
+    	foreach ( $this->managers as $manager => $title ) {
+    		$args[] = [
                 'option_group' => 'xvr_firestarter_settings_group',
-                'option_name' => 'cpt_manager',
+                'option_name' => $manager,
                 'callback' => [ $this->input_callbacks,  'checkbox_sanitize'],
-            ],
-	        [
-		        'option_group' => 'xvr_firestarter_settings_group',
-		        'option_name' => 'taxonomy_manager',
-		        'callback' => [ $this->input_callbacks,  'checkbox_sanitize'],
-	        ],
-	        [
-		        'option_group' => 'xvr_firestarter_settings_group',
-		        'option_name' => 'widget_manager',
-		        'callback' => [ $this->input_callbacks,  'checkbox_sanitize'],
-	        ],
-        ];
+           ];
+	    }
 
         $this->settings->set_settings( $args );
     }
@@ -137,38 +130,20 @@ class Admin extends Base_Controller {
     }
 
     public function set_fields() {
-        $args = [
-            [
-                'id' => 'cpt_manager',
-                'title' => 'Activate CPT Manager',
+    	$args = [];
+
+    	foreach ( $this->managers as $manager => $title ) {
+    		$args[] = [
+                'id' => $manager,
+                'title' => $title,
                 'callback' => [ $this->input_callbacks,  'checkbox_field'],
                 'page' => 'firestarter_plugin',
                 'section' => 'xvr_firestarter_admin_index',
                 'args' => [
-                    'label_for' => 'cpt_manager',
+                    'label_for' => $manager,
                 ],
-            ],
-	        [
-		        'id' => 'taxonomy_manager',
-		        'title' => 'Activate Taxonomy Manager',
-		        'callback' => [ $this->input_callbacks,  'checkbox_field'],
-		        'page' => 'firestarter_plugin',
-		        'section' => 'xvr_firestarter_admin_index',
-		        'args' => [
-			        'label_for' => 'taxonomy_manager',
-		        ],
-	        ],
-	        [
-		        'id' => 'widget_manager',
-		        'title' => 'Activate Widget Manager',
-		        'callback' => [ $this->input_callbacks,  'checkbox_field'],
-		        'page' => 'firestarter_plugin',
-		        'section' => 'xvr_firestarter_admin_index',
-		        'args' => [
-			        'label_for' => 'widget_manager',
-		        ],
-	        ],
-        ];
+            ];
+	    }
 
         $this->settings->set_fields( $args );
     }
