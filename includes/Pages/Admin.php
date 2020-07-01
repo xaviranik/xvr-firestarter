@@ -101,21 +101,29 @@ class Admin extends Base_Controller {
         );
     }
 
+    /**
+     * Sets Settings
+     *
+     * @return void
+     */
     public function set_settings() {
 
-    	$args = [];
-
-    	foreach ( $this->managers as $manager => $title ) {
-    		$args[] = [
-                'option_group' => 'xvr_firestarter_settings_group',
-                'option_name' => $manager,
-                'callback' => [ $this->input_callbacks,  'checkbox_sanitize'],
-           ];
-	    }
+    	$args = [
+		    [
+			    'option_group' => 'xvr_firestarter_settings_group',
+			    'option_name' => 'firestarter_plugin',
+			    'callback' => [ $this->input_callbacks,  'checkbox_sanitize'],
+		    ]
+	    ];
 
         $this->settings->set_settings( $args );
     }
 
+    /**
+     * Sets sections
+     *
+     * @return void
+     */
     public function set_sections() {
         $args = [
             [
@@ -129,6 +137,11 @@ class Admin extends Base_Controller {
         $this->settings->set_sections( $args );
     }
 
+    /**
+     * Sets field
+     *
+     * @return void
+     */
     public function set_fields() {
     	$args = [];
 
@@ -140,6 +153,7 @@ class Admin extends Base_Controller {
                 'page' => 'firestarter_plugin',
                 'section' => 'xvr_firestarter_admin_index',
                 'args' => [
+                	'option_name' => 'firestarter_plugin',
                     'label_for' => $manager,
                 ],
             ];
