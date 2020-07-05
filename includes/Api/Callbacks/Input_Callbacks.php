@@ -38,9 +38,11 @@ class Input_Callbacks extends Base_Controller {
 		$name = $args['label_for'];
 		$classes = isset( $args['class'] ) ? $args['class'] : 'checkbox';
 		$option_name = $args['option_name'];
-		$is_checked = get_option( $option_name );
+		$checkbox = get_option( $option_name );
 
-		echo '<input '. ( $is_checked[ $name ] ? 'checked' : '' ) .' type="checkbox" name="' . $option_name . '[' . $name . ']' . '" value="1" class="' . $classes . '">';
+		$is_checked = ( isset( $checkbox[ $name ] ) ? ( $checkbox[ $name ] ? true : false ) : false );
+
+		echo '<input '. ( $is_checked ? 'checked' : '' ) .' type="checkbox" name="' . $option_name . '[' . $name . ']' . '" value="1" class="' . $classes . '">';
 	}
 
 }

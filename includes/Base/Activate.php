@@ -12,5 +12,12 @@ class Activate {
      */
     public static function activate() {
 		flush_rewrite_rules();
+
+		if( get_option( 'firestarter_plugin' ) ) {
+			return;
+		}
+
+		$default = [];
+		update_option( 'firestarter_plugin', $default );
 	}
 }
